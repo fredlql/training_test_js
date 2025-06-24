@@ -1,4 +1,4 @@
-name:Javascript Playwright Tests
+name: Javascript Playwright Tests
 
 # Déclenche sur push ou pull request sur toutes les branches
 on:
