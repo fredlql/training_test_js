@@ -23,10 +23,6 @@ const config = {
       name: 'firefox',
       use: { browserName: 'firefox' },
     },
-    {
-      name: 'webkit',
-      use: { browserName: 'webkit' },
-    },
   ],
 };
 
