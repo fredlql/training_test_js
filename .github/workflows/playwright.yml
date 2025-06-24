@@ -1,40 +1,31 @@
-name: Daily Playwright Tests Javascript Training
+name:Javascript Playwright Tests
 
+# Déclenche sur push ou pull request sur toutes les branches
 on:
   push:
-    branches:
-      - main
-  schedule:
-    - cron: '*/5 * * * *'     # Exécution tous les jours à 6h UTC
-  workflow_dispatch:        # Permet de lancer manuellement depuis GitHub
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'   # ou une autre version LTS
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest-html
-        playwright install --with-deps
+      - name: Install dependencies
+        run: npm ci   # installe les dépendances selon package-lock.json
 
-    - name: Run Playwright tests
-      run: |
-        pytest tests/ --html=rapport.html
+      - name: Install Playwright browsers
+        run: npx playwright install
 
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      with:
-        name: rapport-playwright
-        path: rapport.html
+      - name: Run Playwright tests
+        run: npm test
 
